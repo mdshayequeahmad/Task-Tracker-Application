@@ -22,7 +22,7 @@ interface Task {
 const HomePage: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const tasksList = useSelector((state: RootState) => state.tasks.taskItems);
+  const tasksList: Task[] = useSelector((state: RootState) => state.tasks.taskItems);
   const dispatch = useDispatch();
 
   useEffect(() => {

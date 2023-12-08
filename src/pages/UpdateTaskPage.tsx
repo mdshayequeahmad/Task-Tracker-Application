@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../redux/store";
+import { RootState } from "../redux/store";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateTasks } from "../redux/taskTrackerSlice";
 
@@ -12,10 +12,6 @@ interface Task {
   status: boolean;
 }
 
-type IdParams = {
-  id: string;
-};
-
 const UpdateTaskPage: React.FC = () => {
   const [taskName, setTaskName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -24,7 +20,7 @@ const UpdateTaskPage: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const TaskItems = useSelector((state: RootState) => state.tasks.taskItems);
-  const { id } = useParams<IdParams>();
+  const { id } = useParams();
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -48,10 +44,10 @@ const UpdateTaskPage: React.FC = () => {
   };
 
   useEffect(() => {
-    const tasks = TaskItems.find((item) => item.id === id);
+    const tasks: Task = TaskItems.find((item) => item.id === id);
 
-    setTaskName(tasks?.taskName);
-    setDescription(tasks?.description);
+    setTaskName(tasks.taskName);
+    setDescription(tasks.description);
   }, [id]);
 
   return (
